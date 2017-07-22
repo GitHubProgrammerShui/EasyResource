@@ -150,8 +150,8 @@ public class DefaultResourceManager implements ResourceManager{
 	 */
 	@Override
 	public File createOrCover(String startPath, String fileName, String... dirs) {
-		// TODO Auto-generated method stub
-		return null;
+		File file=this.findOrCreateFile(startPath,fileName,dirs);
+		return file;
 	}
 	/**
 	 * 根据指定的File对象进行迭代删除（即如果要删除的是目录，且目录中还有子目录和文件时会将子目录也给删除掉）,如果File代表的文件或目录不存在<br>
@@ -193,11 +193,9 @@ public class DefaultResourceManager implements ResourceManager{
 	 */
 	@Override
 	public boolean delete(String startPath, String... dirOrFile){
-		File rootFile=new File(startPath);
 		File file=this.find(startPath, dirOrFile);
 		if(file!=null&&file.getAbsolutePath().endsWith(startPath)){
 			File parent=file.getParentFile();
-			boolean deleteOK=true;
 			while (true) {
 				this.delete(file);
 				if(this.isEmptyDirectory(parent)){
